@@ -45,5 +45,16 @@ namespace TaskBasedInsuranceCalculator.Services
 
             return new RoundingCalculator(baseCalculator);
         }
+        public ICalculator CreateDynamicCalculator(params Func<ICalculator, ICalculator>[] decorators)
+        {
+            ICalculator calculator = CreateCalculator();
+
+            foreach (var decorator in decorators)
+            {
+                calculator = decorator(calculator);
+            }
+
+            return calculator;
+        }
     }
 }
