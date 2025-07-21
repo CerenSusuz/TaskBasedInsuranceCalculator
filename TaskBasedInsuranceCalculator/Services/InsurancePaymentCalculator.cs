@@ -7,7 +7,7 @@ using TaskBasedInsuranceCalculator.Domain;
 
 namespace TaskBasedInsuranceCalculator.Services
 {
-    public class InsurancePaymentCalculator
+    public class InsurancePaymentCalculator : ICalculator
     {
         private readonly ICurrencyService currencyService;
         private readonly ITripRepository tripRepository;
