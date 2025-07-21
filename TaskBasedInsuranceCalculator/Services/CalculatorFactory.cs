@@ -11,11 +11,13 @@ namespace TaskBasedInsuranceCalculator.Services
     {
         private readonly ICurrencyService currencyService;
         private readonly ITripRepository tripRepository;
+        private readonly ILogger logger;
 
-        public CalculatorFactory(ICurrencyService currencyService, ITripRepository tripRepository)
+        public CalculatorFactory(ICurrencyService currencyService, ITripRepository tripRepository, ILogger logger)
         {
             this.currencyService = currencyService;
             this.tripRepository = tripRepository;
+            this.logger = logger;
         }
 
         public ICalculator CreateCalculator()
@@ -28,6 +30,20 @@ namespace TaskBasedInsuranceCalculator.Services
             var baseCalculator = new InsurancePaymentCalculator(currencyService, tripRepository);
 
             return new CachedInsurancePaymentCalculator(baseCalculator);
+        }
+
+        public ICalculator CreateLoggingCalculator()
+        {
+            var baseCalculator = CreateCalculator();
+
+            return new LoggingCalculator(baseCalculator, logger);
+        }
+
+        public ICalculator CreateRoundingCalculator()
+        {
+            var baseCalculator = CreateCalculator();
+
+            return new RoundingCalculator(baseCalculator);
         }
     }
 }
