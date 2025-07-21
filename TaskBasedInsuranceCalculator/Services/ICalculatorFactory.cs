@@ -12,5 +12,6 @@ namespace TaskBasedInsuranceCalculator.Services
         ICalculator CreateCachedCalculator();
         ICalculator CreateLoggingCalculator();
         ICalculator CreateRoundingCalculator();
+        ICalculator CreateDynamicCalculator(params Func<ICalculator, ICalculator>[] decorators);
     }
 }
